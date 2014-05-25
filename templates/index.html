@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block body %}
+  {% if success %}
+    <div class="alert alert-success">
+      <strong>Ευχαριστούμε! Λάβαμε την αίτησή σας.</strong>
+    </div>
+  {% endif %}
+
+  <form role="form" class="form-horizontal" action="/apply" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="onoma" class="col-sm-2 control-label">Όνοματεπώνυμο</label>
+      <div class="col-sm-6">
+        <input type="text"
+	       class="form-control"
+	       id="onoma"
+	       name="onoma"
+	       data-content="Συμπληρώστε το ονοματεπώνυμό σας."
+	       data-toggle="popover"
+	       data-container="body"
+	       title="ΒΗΜΑ 1"
+	       data-trigger="hover"
+	       required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="xwrio" class="col-sm-2 control-label">Χωριό</label>
+      <div class="col-sm-6">
+        <select
+	   name="xwrio"
+	   id="xwrio"
+	   class="form-control"
+	   data-content="Επιλέξτε το χωριό στο οποίο απευθύνεται η αίτησή σας."
+	   data-toggle="popover"
+	   data-container="body"
+	   title="ΒΗΜΑ 2"
+	   data-trigger="hover">
+      	{% for xwrio_name in xwria_names %}
+      	  <option value="{{ xwrio_name }}">{{ xwria[xwrio_name] }}</option>
+      	{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="file" class="col-sm-2 control-label">Αρχείο Αίτησης</label>
+      <div class="col-sm-6"
+	   id="form-file-popover"
+	   data-content="Πατήστε για να επιλέξετε το αρχείο της συμπληρωμένης
+	   αίτησής σας."
+	   data-toggle="popover"
+	   data-container="body"
+	   title="ΒΗΜΑ 3"
+	   data-trigger="hover">
+        <input type="file" id="file" name="file" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="photo1" class="col-sm-2 control-label">Φωτογραφίες</label>
+
+      <div class="col-sm-6"
+	   id="form-photo-popover"
+	   data-content="Πατήστε για να επιλέξετε φωτογραφίες σχετικές με την
+	   αίτησή σας."
+	   data-toggle="popover"
+	   data-container="body"
+	   title="ΒΗΜΑ 4"
+	   data-trigger="hover">
+	<input type="file" id="photo1" name="photo1" required>
+      </div>
+
+      <div id="extra-photos"></div>
+
+      <div class="col-sm-6 col-sm-offset-2" style="margin-top:10px">
+	<a id="extra-photo-btn" class="btn btn-info" href="#" role="button">
+	  <span class="glyphicon glyphicon-plus"></span> Επιπλέον Φωτογραφία</a>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Υποβολή Αίτησης</button>
+      </div>
+    </div>
+  </form>
+
+  <script type="text/javascript">
+    var popovers = ['#onoma', '#xwrio', '#form-file-popover', '#form-photo-popover']
+    for (var i = 0; i < popovers.length; i++) {
+        $(popovers[i]).popover()
+    }
+
+    photo_index = 2
+
+    $('#extra-photo-btn').click(function () {
+      html = '<div class="col-sm-offset-2 col-sm-6">' +
+               '<input type="file" name="photo' + photo_index + '">' +
+	     '</div>'
+
+      photo_index += 1
+      $('#extra-photos').append(html)
+    })
+  </script>
+{% endblock %}

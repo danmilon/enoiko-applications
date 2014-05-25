@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block h1 %}- {{ xwrio }}{% endblock %}
+
+{% block body %}
+<table class="table table-stripped table-hover">
+  <thead>
+    <tr>
+      <th>Όνοματεπώνυμο</th>
+      <th>Αίτηση</th>
+      <th>Φωτογραφίες</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for application in applications %}
+    <tr>
+  	<td>{{ application.onoma }}</td>
+  	<td><a href="{{ application.file_url }}">Αποθήκευσης Αίτησης</a></td>
+	<td>
+	  {% for photo_url in application.photo_urls %}
+	    <a target="_blank" href="{{ photo_url }}">Φωτογραφία {{ loop.index }}</a><br>
+	  {% endfor %}
+	</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
